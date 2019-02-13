@@ -21,10 +21,10 @@ public class Robot extends TimedRobot {
 
 
   void set(double l, double r) {
-    l1.set(-l);
-    l2.set(-l);
-    r1.set(r);
-    r2.set(r);
+    l1.set(l);
+    l2.set(l);
+    r1.set(-r);
+    r2.set(-r);
   }
 
   @Override
@@ -47,11 +47,12 @@ public class Robot extends TimedRobot {
       visionTable.getEntry("centroid-left-x").getDouble(0) +
       visionTable.getEntry("centroid-right-x").getDouble(0)) / 2;
     boolean valid = visionTable.getEntry("valid").getBoolean(false);
+    System.out.println("valid: " + valid + "center: " + centerLocation);
     if(valid) {
       if(centerLocation > 0.1) 
       {
-        set(-0.3, 0.3);
-      } else if(centerLocation > -0.1)
+        set(0.3, -0.3);
+      } else if(centerLocation < -0.1)
       {
         set(-0.3, 0.3);
       } else {
@@ -65,10 +66,10 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
+    set(joystick.getRawAxis(1), joystick.getRawAxis(5));
   }
 
   @Override
   public void testPeriodic() {
-    set(joystick.getRawAxis(1), joystick.getRawAxis(5));
   }
 }
